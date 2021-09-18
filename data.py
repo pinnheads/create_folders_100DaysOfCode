@@ -1,1 +1,6 @@
-folder_info = {}
+folder_info = {
+    {
+        "day": 1,
+        "title": "",
+    },
+}

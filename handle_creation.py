@@ -5,7 +5,6 @@ from pathlib import Path
 
 class HandleCreation:
     def __init__(self, user_path):
-        self.os = pt.platform()
         self.home_directory = os.path.expanduser("~")
         self.main_dir = "100DaysOfCode"
         self.default_dir = (
@@ -13,7 +12,6 @@ class HandleCreation:
             if user_path == ""
             else f"{user_path}/{self.main_dir}"
         )
-        print(self.default_dir)
         self.readme_path = f"{self.default_dir}/README.md"
         self.gitignore_path = f"{self.default_dir}/.gitignore"
 
@@ -24,6 +22,7 @@ class HandleCreation:
         self.main_dir = Path(self.default_dir).mkdir(
             parents=True, exist_ok=True
         )
+        print(f"** Folder Created at: {self.default_dir}")
 
     def create_readme(self):
         """
@@ -34,7 +33,7 @@ class HandleCreation:
 
         # Check if it already exists
         if readme_path.is_file():
-            print("File already exists! Skipping this step.")
+            print("!! README File already exists! Skipping this step.")
         else:
             # Create the file if it doesn't exist already
             readme_path.touch(mode=0o666, exist_ok=True)
@@ -54,7 +53,7 @@ class HandleCreation:
                 for day_num in range(1, 101):
                     readme_file.write(f"- [ ] Day_{day_num}\n")
             print(
-                f"README file was created at {readme_path}! Edit it as you like :)"
+                f"** README file was created at {readme_path}\n\t Edit the file as you like :)"
             )
 
     def create_gitignore(self):
@@ -64,7 +63,7 @@ class HandleCreation:
         # Path for gitignore file
         gitignore_path = Path(self.gitignore_path)
         if gitignore_path.is_file():
-            print("File already exists! Skipping this step.")
+            print("!! .gitignore File already exists! Skipping this step.")
         else:
             gitignore_path.touch(mode=0o666, exist_ok=True)
             with open(gitignore_path, "a+") as gitignore_file:
@@ -73,6 +72,9 @@ class HandleCreation:
                 gitignore_file.writelines(
                     "*/*.log\n" + "Day_*/__pycache__/\n" + ".vscode\n"
                 )
+            print(
+                f"** .gitignore file was created at {gitignore_path}\n\t Edit the file as you like :D"
+            )
 
     def create_folders(self):
         """
@@ -83,7 +85,7 @@ class HandleCreation:
         for day_num in range(1, 101):
             folder_path = Path(self.default_dir + f"/Day_{day_num}")
             if folder_path.is_dir():
-                print("Already Exists! Continuing")
+                print("!! Already Exists! Continuing")
             else:
                 # make a new folder for each loop
                 Path(self.default_dir + f"/Day_{day_num}").mkdir(
@@ -92,9 +94,11 @@ class HandleCreation:
 
                 # get the new folder path
                 done = self.default_dir + f"/Day_{day_num}"
+                print(f"** Folder 'Day_{day_num}' created...")
 
                 # Make required files and folder
                 Path(done + "/README.md").touch(mode=0o666, exist_ok=True)
+                print(f"\t Day_{day_num}/README.md created")
 
                 # Write contents in README.md file
                 readme_path = Path(done + "/README.md")
